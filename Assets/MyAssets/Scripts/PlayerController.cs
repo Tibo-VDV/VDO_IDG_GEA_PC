@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
         float radius = playerCollider.radius;
         float distance = playerCollider.height * 0.5f;
         isGrounded = Physics.SphereCast(transform.position, radius, Vector3.down, out RaycastHit hit, distance, groundMask);
-        print(isGrounded);
+        //print(isGrounded);
         return isGrounded;
     }
     
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputValue context)   //OnMove geeft aan "unused" omdat ons script het niet called unity zelf called het (geen echte fout)
     {
         Vector2 moveInput = context.Get<Vector2>();
-        print("move value changed:" + moveInput);
+        //print("move value changed:" + moveInput);
         moveDirection = new Vector3(moveInput.x,0,moveInput.y);
     }
     
