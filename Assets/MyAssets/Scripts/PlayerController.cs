@@ -8,11 +8,12 @@ public class PlayerController : MonoBehaviour
     [Header("Initialisation")]
     [SerializeField] float playerMass = 80f;
     [SerializeField] float collisionSweepDistance = 1f;
-    enum CameraMode { firstPerson, thirdPerson }
-    [SerializeField] CameraMode cameraMode = CameraMode.firstPerson;
+    public enum MoveMode { firstPersonMove, thirdPersonMove }
+    [SerializeField] MoveMode moveMode = MoveMode.firstPersonMove;
     Camera mainCam => Camera.main;
     [Header("Move settings")]
     Vector3 moveDirection;
+    Vector3 camDir;
     [SerializeField] float walkSpeed = 2f;
     [SerializeField] float runMultiplier = 4;
     [SerializeField] float currentSpeed = 0;
@@ -37,23 +38,23 @@ public class PlayerController : MonoBehaviour
         Initialize();
     }
 
-    void Update()
+    void LateUpdate()
     {
-        UpdateRotation();
+        UpdateRotation(moveDirection);
     }
 
-    void UpdateRotation()
+    void UpdateRotation(Vector3 rotateDirection)
     {
-        switch (cameraMode)
+        switch (moveMode)
         {
-            case CameraMode.firstPerson:
-                Vector3 camForward = mainCam.transform.forward;
-                camForward.y = 0; // we zetten de y component van onze camForward op 0 zodat we alleen in het horizontale vlak kijken. zo voorkomen we dat we omhoog of omlaag kijken als we onze forward richting updaten.
-                transform.forward = camForward.normalized; // we zetten onze forward richting gelijk aan onze camera zodat we altijd in de richting van onze camera kijken.
+            case MoveMode.firstPersonMove:
+                Vector3 camDir = mainCam.transform.forward;
+                camDir.y = 0; // we zetten de y component van onze camForward op 0 zodat we alleen in het horizontale vlak kijken. zo voorkomen we dat we omhoog of omlaag kijken als we onze forward richting updaten.
+                transform.forward = camDir.normalized; // we zetten onze forward richting gelijk aan onze camera zodat we altijd in de richting van onze camera kijken.
                 break;
-            case CameraMode.thirdPerson:
-
-                if (isMoving) transform.forward = moveDirection.normalized; // we zetten onze forward richting gelijk aan onze movedirection zodat we altijd in de richting van onze movement kijken.
+            case MoveMode.thirdPersonMove:
+                if (isMoving)
+                    transform.forward = rotateDirection.normalized; // we zetten onze forward richting gelijk aan onze movedirection zodat we altijd in de richting van onze movement kijken.
                 break;
         }
     }
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour
         rb.mass = playerMass;
         currentSpeed = walkSpeed;
         isJump = false;
+        isSprinting = false;
     }
 
     void FixedUpdate()
@@ -90,6 +92,7 @@ public class PlayerController : MonoBehaviour
             {
                 //copy onze movedirection naar moveDir
                 Vector3 moveDir = CalculateMoveDirection();
+                print(moveDir);
                 //we projecteren moveDir zodat hij parallel loopt met de slope waar we op zitten. zo behouden we onze velocity.
                 moveDir = Vector3.ProjectOnPlane(moveDir, hit.normal);
                 velocity.x = moveDir.x;
@@ -139,24 +142,37 @@ public class PlayerController : MonoBehaviour
     }*/
     Vector3 TransformToCameraSpace(Vector3 input)
     {
-        float splitX, splitZ;
-        splitX = input.x;
-        splitZ = input.z;
-        Vector3 camX, camZ;
-        camX = mainCam.transform.right * splitX;
-        camZ = mainCam.transform.forward * splitZ;
-        return camX + camZ;
 
+        Vector3 camX, camZ;
+        camX = mainCam.transform.right * input.x;
+        camZ = mainCam.transform.forward * input.y;
+        Vector3 finalDirection = camX + camZ;
+        finalDirection.y = 0;
+        return finalDirection;
+
+    }
+    
+    public void SetMoveMode(MoveMode setMode)
+    {
+        moveMode = setMode;
     }
     #region Inputs
     Vector2 moveInput;
     public void OnMove(InputValue context)   //OnMove geeft aan "unused" omdat ons script het niet called unity zelf called het (geen echte fout)
     {
-         moveInput = context.Get<Vector2>();
+        moveInput = context.Get<Vector2>();
         //print("move value changed:" + moveInput);
-     
+
         isMoving = moveInput.x != 0 || moveInput.y != 0; // we checken of er input is, zo niet zetten we isMoving op false zodat we niet onnodig onze forward richting updaten. 
         //transform.forward = moveDirection.normalized; // we zetten onze forward richting gelijk aan onze movedirection zodat we altijd in de richting van onze movement kijken.
+    }
+    
+    bool isSprinting = false;
+
+    public void OnSprint(InputValue context)
+    {
+        isSprinting = !isSprinting;
+       print("sprint pressed");
     }
 
     
@@ -168,7 +184,9 @@ public class PlayerController : MonoBehaviour
 
     Vector3 CalculateMoveDirection()
     {
+        currentSpeed = isSprinting ? walkSpeed * runMultiplier : walkSpeed;
         moveDirection = TransformToCameraSpace(moveInput);
+        //print("move direction:" + moveDirection);
         Vector3 newDirection = moveDirection * currentSpeed;
 
         newDirection.y = rb.linearVelocity.y;
