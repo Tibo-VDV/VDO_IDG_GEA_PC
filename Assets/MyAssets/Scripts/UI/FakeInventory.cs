@@ -7,34 +7,72 @@ public class FakeInventory : MonoBehaviour
     // [] maakt het een lijst in unity
     //[SerializeField] WeaponUI[] weapon;
     //[SerializeField] WeaponUIStruct[] weaponStruct;
-    [SerializeField] WeaponSO[] weaponSO;
-    [SerializeField] WeaponSO selectedWeapon;
+    [Header("inventory")]
+    [SerializeField] WeaponItem[] weapons;
+    [SerializeField] WeaponItem selectedWeapon;
     [SerializeField] int index;
-
+    /*
+    [Header("Inventory object reference")]
+    [SerializeField] GameObject inventoryObject;
+    */
     [Header("UI Reference")]
     [SerializeField] UIDataExample uIDataExample;
 
+    WeaponController getWeaponController => GetComponent<WeaponController>();
+    //Transform[] children;
+    bool initialized = false; //zeker dat alle info correct gehaald word als dit niet is krijgen we de error en gaat die niet verder
     void Start()
     {
+        /*
+        if(inventoryObject == null)
+        {
+            Debug.LogError("No reference to inventoryObject, assign reference.");
+            return;
+        }
+        */
         index = 0;
-        selectedWeapon = weaponSO[index];
-        uIDataExample.OnInitializeSO(selectedWeapon);
+        selectedWeapon = weapons[index];
+        //children = inventoryObject.GetComponentsInChildren<Transform>();
+        uIDataExample.OnInitializeSO(selectedWeapon.weaponInfo);
+        getWeaponController.UpdateWeapon(selectedWeapon.weaponGameObject);
+        initialized = true;
     }
-    
+
     void OnScrollWheel(InputValue value)
     {
+        if (!initialized) return;
         float scrollDirection = value.Get<float>();
         index += (int)scrollDirection;
-        index = index % weaponSO.Length; // loopend scollijst zonder if statements via gebruik wiskundige formule "modulo" gebruikt door % te typen
-        index = index < 0 ? weaponSO.Length - 1 : index;
-        selectedWeapon = weaponSO[index];
-        Debug.Log($"Selected weapon: {selectedWeapon.weaponType}");
-        uIDataExample.OnInitializeSO(selectedWeapon);
-
-
-        
+        index = index % weapons.Length; // loopend scollijst zonder if statements via gebruik wiskundige formule "modulo" gebruikt door % te typen
+        index = index < 0 ? weapons.Length - 1 : index;
+        selectedWeapon = weapons[index];
+        //Debug.Log($"Selected weapon: {selectedWeapon.weaponInfo.weaponType}");
+        InitializeInventoryItems(); // Initialize altijd eerst, anders kunnen de regels hieronder niet bij hun data
     }
 
+    // zet onze selected item aan en alle rest uit
+    void InitializeInventoryItems()
+    {
+        selectedWeapon.weaponGameObject.SetActive(true);
+        /*
+        int childCount = inventoryObject.childCount;
+        for (int i = 0; i < childCount; i++) // alleen < gebruiken omdat index start met 0 niet met 1 anders moet "<= childCount -1"
+        {
+            print(children[i].name);
+        }
+        */
+        foreach (WeaponItem weaponItem in weapons)
+        {
+            if(weaponItem == selectedWeapon)
+            {
+                continue;   // continue zorgt ervoor dat de rest van de code in deze loop (foreachloop) niet word uitgevoerd en meteen naar de volgende iteratie gaat.
+                            // zo voorkomen we dat we onze geselecteerde weapon meteen weer uitzetten.
+            }
+            weaponItem.weaponGameObject.SetActive(false);
+        }
+        uIDataExample.OnInitializeSO(selectedWeapon.weaponInfo);
+        getWeaponController.UpdateWeapon(selectedWeapon.weaponGameObject);
+    }
 }
 #region Class&Struct
 // we maken een eige class, oftewel "object" aan. hiering geven we properties/eigenschappen die dit object beschrijft mee.
@@ -59,5 +97,13 @@ public struct WeaponUIStruct    // struct is een value type. Wanneer we nieuwe v
     public int currentAmmo;
     public float fireDelay;
     public Sprite weaponSprite;
+}
+#endregion
+#region ScriptableObject + GameObject wrapper 
+[Serializable]
+public class WeaponItem
+{
+    public WeaponSO weaponInfo;
+    public GameObject weaponGameObject;
 }
 #endregion

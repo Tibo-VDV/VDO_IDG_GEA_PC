@@ -16,11 +16,13 @@ public class PlayerController : MonoBehaviour
     Vector3 camDir;
     [SerializeField] float walkSpeed = 2f;
     [SerializeField] float runMultiplier = 4;
-    [SerializeField] float currentSpeed = 0;
+    public float currentSpeed { get; private set; } //{ get; private set; }, zorgt ervoor dat onze public variable read only is.
+    //Dit omdat ze specifiek vermeld dat de "set" private is
+    //Zo voorkomen we dat externe code deze waarde per ongeluk overschrijft
     [SerializeField] float jumpMultiplier = 1f;
     [SerializeField] int maxJumpCount = 1;
     int jumpCount = 0;
-    bool isMoving = false;
+    public bool isMoving { get; private set; }
 
     [Header("Ground and Slope Detection")]
     [SerializeField] LayerMask groundMask;
@@ -61,7 +63,7 @@ public class PlayerController : MonoBehaviour
     void Initialize()
     {
         rb.mass = playerMass;
-        currentSpeed = walkSpeed;
+        currentSpeed = 0;
         isJump = false;
         isSprinting = false;
     }
@@ -76,6 +78,9 @@ public class PlayerController : MonoBehaviour
         //rb.Addforce(Vector3)  //houd rekening met velocity, mass en andere elementen
         //rb.Velocity = Vector3 //overschrijft alle elementen. Achteraf behoud de rb wel zijn massa en velocity
         //rb.MovePosition(rb.position*vector3); // Heeft dezelfde functie transform.Translate, maar in context van de physics step en rigidbody.
+
+        currentSpeed = isSprinting ? walkSpeed * runMultiplier : walkSpeed; // isSprinting? is bool true voor : false erna. 
+        currentSpeed = isMoving ? currentSpeed : 0f;
 
         Vector3 velocity = rb.linearVelocity;
         RaycastHit hit;
@@ -92,7 +97,7 @@ public class PlayerController : MonoBehaviour
             {
                 //copy onze movedirection naar moveDir
                 Vector3 moveDir = CalculateMoveDirection();
-                print(moveDir);
+                //print(moveDir);
                 //we projecteren moveDir zodat hij parallel loopt met de slope waar we op zitten. zo behouden we onze velocity.
                 moveDir = Vector3.ProjectOnPlane(moveDir, hit.normal);
                 velocity.x = moveDir.x;
@@ -172,7 +177,7 @@ public class PlayerController : MonoBehaviour
     public void OnSprint(InputValue context)
     {
         isSprinting = !isSprinting;
-       print("sprint pressed");
+       //print("sprint pressed");
     }
 
     
@@ -184,7 +189,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3 CalculateMoveDirection()
     {
-        currentSpeed = isSprinting ? walkSpeed * runMultiplier : walkSpeed;
+
         moveDirection = TransformToCameraSpace(moveInput);
         //print("move direction:" + moveDirection);
         Vector3 newDirection = moveDirection * currentSpeed;

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "WeaponObject", menuName ="Inventory/create new Weapon")]
