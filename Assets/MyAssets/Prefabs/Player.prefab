@@ -390,6 +390,10 @@ GameObject:
   - component: {fileID: 8559585999654621325}
   - component: {fileID: 2097866720321738777}
   - component: {fileID: 8216239670262416071}
+  - component: {fileID: 1286873875751154454}
+  - component: {fileID: 5231974736956388367}
+  - component: {fileID: 6352536252878671360}
+  - component: {fileID: 160775414665741863}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -477,15 +481,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   playerMass: 80
   collisionSweepDistance: 1
-  walkSpeed: 10
+  moveMode: 0
+  walkSpeed: 4
   runMultiplier: 4
-  currentSpeed: 0
   jumpMultiplier: 1
   maxJumpCount: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 8
   maxSlopeAngle: 45
+  stepHeight: 0.5
 --- !u!114 &8216239670262416071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,6 +521,76 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1286873875751154454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4302744095742292563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04ccb76fbf238f40ba5b68fe484ce27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FPSCamRotation
+  cameraRef: {fileID: 0}
+  mouseSensitivity: 10
+  lookLimits: {x: -90, y: 90}
+--- !u!114 &5231974736956388367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4302744095742292563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f583154dc252e24493b62b4a04535d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToggleCameraMode
+  currentCameraMode: 0
+  firstPersonObjects:
+  - {fileID: 0}
+  thirdPersonObjects:
+  - {fileID: 0}
+--- !u!114 &6352536252878671360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4302744095742292563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6b3c5846ea5c94a8803d466e16a394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FakeInventory
+  weapons:
+  - weaponInfo: {fileID: 11400000, guid: 97f74198bb0664d498011541395c1460, type: 2}
+    weaponGameObject: {fileID: 0}
+  - weaponInfo: {fileID: 11400000, guid: aff1abad2a19166428e476326d02b05a, type: 2}
+    weaponGameObject: {fileID: 0}
+  - weaponInfo: {fileID: 11400000, guid: fc6c61850d458b94d84704e384b9cbb7, type: 2}
+    weaponGameObject: {fileID: 0}
+  selectedWeapon:
+    weaponInfo: {fileID: 0}
+    weaponGameObject: {fileID: 0}
+  index: 0
+  uIDataExample: {fileID: 0}
+--- !u!114 &160775414665741863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4302744095742292563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48608af2dba81424cac18da1168b77d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponController
+  weaponObject: {fileID: 0}
+  getWeaponController: {fileID: 0}
 --- !u!1 &6582487298595413422
 GameObject:
   m_ObjectHideFlags: 0
