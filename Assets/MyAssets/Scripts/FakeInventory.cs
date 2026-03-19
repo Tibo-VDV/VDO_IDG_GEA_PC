@@ -33,8 +33,7 @@ public class FakeInventory : MonoBehaviour
         index = 0;
         selectedWeapon = weapons[index];
         //children = inventoryObject.GetComponentsInChildren<Transform>();
-        uIDataExample.OnInitializeSO(selectedWeapon.weaponInfo);
-        getWeaponController.UpdateWeapon(selectedWeapon.weaponGameObject);
+        InitializeInventoryItems();
         initialized = true;
     }
 
@@ -71,7 +70,7 @@ public class FakeInventory : MonoBehaviour
             weaponItem.weaponGameObject.SetActive(false);
         }
         uIDataExample.OnInitializeSO(selectedWeapon.weaponInfo);
-        getWeaponController.UpdateWeapon(selectedWeapon.weaponGameObject);
+        getWeaponController.UpdateWeapon(selectedWeapon);
     }
 }
 #region Class&Struct

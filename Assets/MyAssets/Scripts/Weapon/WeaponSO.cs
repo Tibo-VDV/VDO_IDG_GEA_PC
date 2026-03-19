@@ -13,6 +13,7 @@ public class WeaponSO : ScriptableObject
     public int maxAmmo;
     public int currentAmmo;
     public float fireDelay;
+    public int ammoCost;
 
     [Header("Weapon graphics and object")]
     public Sprite weaponSprite;
@@ -22,6 +23,8 @@ public class WeaponSO : ScriptableObject
     public int projectileDamage;
     public enum ProjectileType { Raycast, physicalProjectile }
     public ProjectileType projectileType = ProjectileType.Raycast;
+    public LayerMask hitLayers;
     public float maxRayDistance = Mathf.Infinity;
     public GameObject physicalProjectile;
+    public float projectileVelocity;
 }

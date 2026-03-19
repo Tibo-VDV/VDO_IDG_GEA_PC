@@ -16,9 +16,14 @@ MonoBehaviour:
   maxAmmo: 5
   currentAmmo: 5
   fireDelay: 10
+  ammoCost: 0
   weaponSprite: {fileID: -1439596126, guid: 6318b894e532ef140b281af0b2ec5f98, type: 3}
   weaponPrefab: {fileID: 0}
   projectileDamage: 0
-  projectileType: 0
+  projectileType: 1
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 0
   maxRayDistance: Infinity
-  physicalProjectile: {fileID: 0}
+  physicalProjectile: {fileID: 7425016986143780488, guid: be6d9d1353862474eb8e4a1a33c689f6, type: 3}
+  projectileVelocity: 0
