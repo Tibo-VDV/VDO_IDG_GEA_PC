@@ -38,8 +38,18 @@ public class WeaponAnimationController : MonoBehaviour
         return animator.GetBool("_fire");
     }
 
+    public void SetJumpState(bool state)
+    {
+        animator.SetBool("_isGrounded", state);
+    }
+
     bool IntBasedBool(int _value)
     {
         return _value == 1 ? true : false;
+    }
+
+    public void SetJumpDirection(float value)
+    {
+        animator.SetFloat("_jumpDirection",value);
     }
 }

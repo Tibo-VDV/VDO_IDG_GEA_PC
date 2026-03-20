@@ -33,6 +33,11 @@ public class PlayerController : MonoBehaviour
     [Header("Stairs Detection")]
     [SerializeField] float stepHeight = 0.5f;
 
+    [Header("Weapon item reference")]
+    [SerializeField] WeaponItem weaponItem;
+    [SerializeField] WeaponAnimationController getWeaponAnimationController;
+
+
     Rigidbody rb => GetComponent<Rigidbody>();
 
     void Start()
@@ -42,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
     void LateUpdate()
     {
+        
         UpdateRotation(moveDirection);
     }
 
@@ -72,7 +78,16 @@ public class PlayerController : MonoBehaviour
     {
         Movement();
         jump();
+        UpdateJumpAnimationState();
+       
     }
+
+    public void UpdateWeapon(WeaponItem weapon)
+    {
+        weaponItem = weapon;
+        getWeaponAnimationController = weaponItem.weaponGameObject.GetComponent<WeaponAnimationController>();
+    }
+    
     void Movement()
     {
         //rb.Addforce(Vector3)  //houd rekening met velocity, mass en andere elementen
@@ -117,12 +132,18 @@ public class PlayerController : MonoBehaviour
 
     void jump()
     {
+        
         if (isGrounded && isJump && jumpCount < maxJumpCount)
         {
             rb.AddForce(Vector3.up * jumpMultiplier, ForceMode.VelocityChange);
             jumpCount++;
         }
 
+    }
+    void UpdateJumpAnimationState()
+    {
+        getWeaponAnimationController.SetJumpState(isGrounded);
+        getWeaponAnimationController.SetJumpDirection(rb.linearVelocity.y);
     }
 
     /*void DetectStairs()

@@ -19,6 +19,7 @@ public class Destructibleobject : MonoBehaviour, IDamagable
     {
         Instantiate(DestroyedState, transform.position, Quaternion.identity);
         Destroy(gameObject);//Destroyes obj waar dit script op staat niet net gespawned object
+        
     }
 
 

@@ -14,6 +14,7 @@ public class WeaponSO : ScriptableObject
     public int currentAmmo;
     public float fireDelay;
     public int ammoCost;
+    public bool pickedUp = false;
 
     [Header("Weapon graphics and object")]
     public Sprite weaponSprite;

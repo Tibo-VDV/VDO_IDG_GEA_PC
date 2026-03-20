@@ -19,8 +19,17 @@ public class FakeInventory : MonoBehaviour
     [SerializeField] UIDataExample uIDataExample;
 
     WeaponController getWeaponController => GetComponent<WeaponController>();
-    //Transform[] children;
+    PlayerController getPlayerController => GetComponent<PlayerController>();
     bool initialized = false; //zeker dat alle info correct gehaald word als dit niet is krijgen we de error en gaat die niet verder
+
+    static public FakeInventory instance;
+
+    void Awake()
+    {
+        if (instance != null) Destroy(this);
+        else instance = this;
+    }
+
     void Start()
     {
         /*
@@ -52,7 +61,7 @@ public class FakeInventory : MonoBehaviour
     // zet onze selected item aan en alle rest uit
     void InitializeInventoryItems()
     {
-        selectedWeapon.weaponGameObject.SetActive(true);
+        selectedWeapon.weaponGameObject.SetActive(false);
         /*
         int childCount = inventoryObject.childCount;
         for (int i = 0; i < childCount; i++) // alleen < gebruiken omdat index start met 0 niet met 1 anders moet "<= childCount -1"
@@ -62,8 +71,10 @@ public class FakeInventory : MonoBehaviour
         */
         foreach (WeaponItem weaponItem in weapons)
         {
-            if(weaponItem == selectedWeapon)
+            if (weaponItem == selectedWeapon)
             {
+                if (selectedWeapon.weaponInfo.pickedUp)
+                    weaponItem.weaponGameObject.SetActive(true);
                 continue;   // continue zorgt ervoor dat de rest van de code in deze loop (foreachloop) niet word uitgevoerd en meteen naar de volgende iteratie gaat.
                             // zo voorkomen we dat we onze geselecteerde weapon meteen weer uitzetten.
             }
@@ -71,6 +82,27 @@ public class FakeInventory : MonoBehaviour
         }
         uIDataExample.OnInitializeSO(selectedWeapon.weaponInfo);
         getWeaponController.UpdateWeapon(selectedWeapon);
+        getPlayerController.UpdateWeapon(selectedWeapon);
+    }
+    
+    public void PickUpItem(WeaponSO item)
+    {
+        int _index = 0;
+        foreach (WeaponItem weaponItem in weapons)
+        {
+
+            if (weaponItem.weaponInfo == item)
+            {
+                print("inIfstate");
+                weaponItem.weaponInfo.pickedUp = true;
+                selectedWeapon = weaponItem;
+                index = _index;
+                break;
+                
+            }
+            _index++;
+        }
+        InitializeInventoryItems();
     }
 }
 #region Class&Struct

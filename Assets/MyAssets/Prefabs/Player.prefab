@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6384347606048745539}
   - component: {fileID: 6434959939257257423}
   - component: {fileID: 2148645448564163311}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6006555867152269306}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: '[[GFX]]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 8655403950432867285}
   - component: {fileID: 8438868492264903406}
   - component: {fileID: 5357199978102645914}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 6287982094212576717}
   - component: {fileID: 6165361365361410749}
   - component: {fileID: 4788704385907953690}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player-Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,7 +394,7 @@ GameObject:
   - component: {fileID: 5231974736956388367}
   - component: {fileID: 6352536252878671360}
   - component: {fileID: 160775414665741863}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
@@ -491,6 +491,10 @@ MonoBehaviour:
     m_Bits: 8
   maxSlopeAngle: 45
   stepHeight: 0.5
+  weaponItem:
+    weaponInfo: {fileID: 0}
+    weaponGameObject: {fileID: 0}
+  getWeaponAnimationController: {fileID: 0}
 --- !u!114 &8216239670262416071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,8 +593,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48608af2dba81424cac18da1168b77d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
-  weaponObject: {fileID: 0}
-  getWeaponController: {fileID: 0}
+  weaponItem:
+    weaponInfo: {fileID: 0}
+    weaponGameObject: {fileID: 0}
+  getWeaponAnimationController: {fileID: 0}
 --- !u!1 &6582487298595413422
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,7 +609,7 @@ GameObject:
   - component: {fileID: 2347651920971202794}
   - component: {fileID: 1826679624157329269}
   - component: {fileID: 2306089664640381806}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

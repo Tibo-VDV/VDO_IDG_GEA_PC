@@ -125,4 +125,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52fe2f20db5e4bb4984ae76af886caf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Destructibleobject
-  DestroyedState: {fileID: 0}
+  _health: 4
+  DestroyedState: {fileID: 3645071073408013868, guid: fa72fea6ba6aa7b428ea64279207223d, type: 3}

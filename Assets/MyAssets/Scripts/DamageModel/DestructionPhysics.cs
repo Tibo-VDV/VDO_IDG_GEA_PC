@@ -4,7 +4,7 @@ using UnityEngine;
 public class DestructionPhysics : MonoBehaviour
 {
     Rigidbody rb => GetComponent<Rigidbody>();
-    [SerializeField] float force = 30f;
+    [SerializeField] float force = 3000f;
     [SerializeField] float forceRadius = 0.3f;
 
     void Start()
