@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "WeaponObject", menuName ="Inventory/create new Weapon")]
 public class WeaponSO : ScriptableObject
 {
-    public enum WeaponType { ScopeRifle, Shotgun, PlasmaRifle, GrenadeLauncher }
+    public enum WeaponType { ScopeRifle, Shotgun, PlasmaRifle, GrenadeLauncher, Granaat }
 
     [Header("Weapon type")]
     public WeaponType weaponType = WeaponType.ScopeRifle;
