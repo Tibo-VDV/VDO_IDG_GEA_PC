@@ -6,6 +6,7 @@ public class ProjectileDamage : MonoBehaviour
 
     void CollisionEnter(Collision col)
     {
+        
         if (col.gameObject.GetComponent<IDamagable>() == null) return;
         col.gameObject.GetComponent<IDamagable>().DoDamage(weaponInfo.projectileDamage);
     }

@@ -87,6 +87,7 @@ public class FakeInventory : MonoBehaviour
     
     public void PickUpItem(WeaponSO item)
     {
+        
         int _index = 0;
         foreach (WeaponItem weaponItem in weapons)
         {

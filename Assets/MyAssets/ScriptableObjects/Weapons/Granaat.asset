@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0c66ac57b1feb4384e89342fac6ad1, type: 3}
   m_Name: Granaat
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSO
-  weaponType: 0
+  weaponType: 4
   maxAmmo: 5
   currentAmmo: 0
   fireDelay: 0
   ammoCost: 1
-  pickedUp: 0
-  weaponSprite: {fileID: 0}
+  pickedUp: 1
+  weaponSprite: {fileID: 582081230, guid: 6318b894e532ef140b281af0b2ec5f98, type: 3}
   weaponPrefab: {fileID: 0}
   projectileDamage: 50
   projectileType: 1
   hitLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 31
   maxRayDistance: Infinity
-  physicalProjectile: {fileID: 0}
-  projectileVelocity: 0
+  physicalProjectile: {fileID: 919132149155446097, guid: 0ee19a1e78c7972449d1aa55a3b2ab3c, type: 3}
+  projectileVelocity: 10

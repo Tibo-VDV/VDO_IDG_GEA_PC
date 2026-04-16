@@ -17,9 +17,10 @@ MonoBehaviour:
   currentAmmo: 10
   fireDelay: 7
   ammoCost: 0
+  pickedUp: 1
   weaponSprite: {fileID: -1754117738, guid: 6318b894e532ef140b281af0b2ec5f98, type: 3}
   weaponPrefab: {fileID: 0}
-  projectileDamage: 100
+  projectileDamage: 2
   projectileType: 0
   hitLayers:
     serializedVersion: 2

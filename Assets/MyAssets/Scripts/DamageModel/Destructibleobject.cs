@@ -17,7 +17,7 @@ public class Destructibleobject : MonoBehaviour, IDamagable
     
     void OnKill()
     {
-        Instantiate(DestroyedState, transform.position, Quaternion.identity);
+        //Instantiate(DestroyedState, transform.position, Quaternion.identity);
         Destroy(gameObject);//Destroyes obj waar dit script op staat niet net gespawned object
         
     }
