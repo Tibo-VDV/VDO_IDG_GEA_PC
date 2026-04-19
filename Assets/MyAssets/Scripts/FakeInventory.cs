@@ -74,15 +74,17 @@ public class FakeInventory : MonoBehaviour
             if (weaponItem == selectedWeapon)
             {
                 if (selectedWeapon.weaponInfo.pickedUp)
+                {
                     weaponItem.weaponGameObject.SetActive(true);
+                    getWeaponController.UpdateWeapon(selectedWeapon);
+                    uIDataExample.OnInitializeSO(selectedWeapon.weaponInfo);
+                    getPlayerController.UpdateWeapon(selectedWeapon);
+                }
                 continue;   // continue zorgt ervoor dat de rest van de code in deze loop (foreachloop) niet word uitgevoerd en meteen naar de volgende iteratie gaat.
                             // zo voorkomen we dat we onze geselecteerde weapon meteen weer uitzetten.
             }
             weaponItem.weaponGameObject.SetActive(false);
         }
-        uIDataExample.OnInitializeSO(selectedWeapon.weaponInfo);
-        getWeaponController.UpdateWeapon(selectedWeapon);
-        getPlayerController.UpdateWeapon(selectedWeapon);
     }
     
     public void PickUpItem(WeaponSO item)

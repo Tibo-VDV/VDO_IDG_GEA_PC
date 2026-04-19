@@ -19,12 +19,12 @@ MonoBehaviour:
   ammoCost: 1
   pickedUp: 1
   weaponSprite: {fileID: 582081230, guid: 6318b894e532ef140b281af0b2ec5f98, type: 3}
-  weaponPrefab: {fileID: 0}
+  weaponPrefab: {fileID: 5226857820249130877, guid: 58c03e2bce04653488a5109ccb504750, type: 3}
   projectileDamage: 50
   projectileType: 1
   hitLayers:
     serializedVersion: 2
     m_Bits: 31
   maxRayDistance: Infinity
-  physicalProjectile: {fileID: 919132149155446097, guid: 0ee19a1e78c7972449d1aa55a3b2ab3c, type: 3}
-  projectileVelocity: 10
+  physicalProjectile: {fileID: 7111028782559930688, guid: 8cfdc65ef576db24496e646d18cafdca, type: 3}
+  projectileVelocity: 20

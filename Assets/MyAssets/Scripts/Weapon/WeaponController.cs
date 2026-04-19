@@ -8,7 +8,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] WeaponAnimationController getWeaponAnimationController;
     PlayerController getPlayerController => GetComponent<PlayerController>();
 
-    
+    bool initialized = false;
     
 
     void LateUpdate()
@@ -35,7 +35,7 @@ public class WeaponController : MonoBehaviour
             return;
         }
         getWeaponAnimationController = weaponItem.weaponGameObject.GetComponent<WeaponAnimationController>();
-
+        initialized = true;
         return;
 
     }
@@ -49,7 +49,7 @@ public class WeaponController : MonoBehaviour
             Debug.LogError("No AnimationController found on weaponObject");
             return;
         }
-
+        if(!initialized) return;
         if (getWeaponAnimationController.GetFireState()) return; //Als we al aan het schieten zijn, returnen we zodat we niet opnieuw kunnen schieten voordat de animatie klaar is.
         getWeaponAnimationController.FireWeapon(1);//1 = true, 0 = false
         

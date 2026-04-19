@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -37,8 +38,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] WeaponItem weaponItem;
     [SerializeField] WeaponAnimationController getWeaponAnimationController;
 
+    public bool playWalkingSound = false;
 
-    Rigidbody rb => GetComponent<Rigidbody>();
+    public Rigidbody rb => GetComponent<Rigidbody>();
+
+    public static PlayerController instance;
+
+    public event Action walking;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
+    void OnEnable()
+    {
+        
+    }
 
     void Start()
     {
@@ -108,6 +124,7 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
+            
             if (slopeAngle <= maxSlopeAngle)
             {
                 //copy onze movedirection naar moveDir
@@ -142,6 +159,7 @@ public class PlayerController : MonoBehaviour
     }
     void UpdateJumpAnimationState()
     {
+        if(getWeaponAnimationController == null) return;
         getWeaponAnimationController.SetJumpState(isGrounded);
         getWeaponAnimationController.SetJumpDirection(rb.linearVelocity.y);
     }
@@ -191,13 +209,22 @@ public class PlayerController : MonoBehaviour
 
         isMoving = moveInput.x != 0 || moveInput.y != 0; // we checken of er input is, zo niet zetten we isMoving op false zodat we niet onnodig onze forward richting updaten. 
         //transform.forward = moveDirection.normalized; // we zetten onze forward richting gelijk aan onze movedirection zodat we altijd in de richting van onze movement kijken.
+
+        if(!playWalkingSound)
+            {
+            walking.Invoke();
+            playWalkingSound = true;
+                
+            }
+        
     }
     
-    bool isSprinting = false;
+    public bool isSprinting = false;
 
     public void OnSprint(InputValue context)
     {
-        isSprinting = !isSprinting;
+        isSprinting = context.isPressed;
+        
        //print("sprint pressed");
     }
 

@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class BulletMovement : MonoBehaviour
 {
+    
     Rigidbody rb => GetComponent<Rigidbody>();
     float velocity;
 
     void Start()
-    {
+    {  
         rb.AddForce(transform.forward*velocity, ForceMode.VelocityChange);
     }
 
@@ -15,4 +16,5 @@ public class BulletMovement : MonoBehaviour
         velocity = vel;
     }
 
+    
 }
